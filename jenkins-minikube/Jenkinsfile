@@ -5,22 +5,22 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from GitHub
-                git 'https://github.com/yourusername/yourrepository.git'
+                git 'https://github.com/sindhurv18/quick.git'
             }
         }
         
         stage('Deploy to Minikube') {
             steps {
                 // Apply Kubernetes manifests
-                dir('kubernetes') {
+                dir('jenkins-minikube') {
                     // Apply secret
-                    sh 'kubectl apply -f secret.yaml --namespace=yournamespace'
+                    sh 'kubectl apply -f secret.yaml'
                     
                     // Apply deployment
-                    sh 'kubectl apply -f deployment.yaml --namespace=yournamespace'
+                    sh 'kubectl apply -f deployment.yaml'
                     
                     // Wait for deployment to be ready
-                    sh 'kubectl rollout status deployment/yourdeployment --namespace=yournamespace'
+                    sh 'kubectl rollout status deployment/portal-deployment'
                 }
             }
         }
