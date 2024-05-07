@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout code from GitHub
+                git 'https://github.com/yourusername/yourrepository.git'
+            }
+        }
+        
+        stage('Deploy to Minikube') {
+            steps {
+                // Apply Kubernetes manifests
+                dir('kubernetes') {
+                    // Apply secret
+                    sh 'kubectl apply -f secret.yaml --namespace=yournamespace'
+                    
+                    // Apply deployment
+                    sh 'kubectl apply -f deployment.yaml --namespace=yournamespace'
+                    
+                    // Wait for deployment to be ready
+                    sh 'kubectl rollout status deployment/yourdeployment --namespace=yournamespace'
+                }
+            }
+        }
+    }
+}
