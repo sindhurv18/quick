@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Apply Kubernetes manifests to Minikube cluster
-                    sh 'kubectl apply -f secret.yaml -f deployment.yaml --namespace=$NAMESPACE'
+                    sh '/usr/local/bin/kubectl apply -f secret.yaml -f deployment.yaml --namespace=$NAMESPACE'
                 }
             }
         }
