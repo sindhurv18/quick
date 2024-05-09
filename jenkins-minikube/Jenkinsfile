@@ -2,21 +2,25 @@ pipeline {
     agent any
     
     stages {
+        stage('Install kubectl') {
+            steps {
+                script {
+                    // Change directory to Jenkins workspace
+                    dir("$WORKSPACE") {
+                        // Download kubectl into Jenkins workspace
+                        sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+                        // Make kubectl executable
+                        sh 'chmod +x kubectl'
+                    }
+                }
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 script {
-                    git credentialsId: 'git', url: 'https://github.com/sindhurv18/quick.git', branch: 'master' // Replace with your GitHub repository URL and credentials ID
-                }
-            }
-        }  
-    stages {
-        stage('Download kubectl') {
-            steps {
-                script {
-                    sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
-
-                    // Make kubectl executable
-                    sh 'chmod +x kubectl'
+                    // Clone the repository containing Kubernetes manifest files
+                    git credentialsId: 'git', url: 'https://github.com/sindhurv18/quick.git', branch: 'master'
                 }
             }
         }
@@ -25,7 +29,7 @@ pipeline {
             steps {
                 script {
                     // Apply Kubernetes manifests to Minikube cluster
-                    sh '$WORKSPACE/kubectl apply -f secret.yaml -f deployment.yaml --namespace=default'
+                    sh '$WORKSPACE/kubectl apply -f $WORKSPACE/secret.yaml -f $WORKSPACE/deployment.yaml --namespace=default'
                 }
             }
         }
