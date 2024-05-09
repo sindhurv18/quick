@@ -24,12 +24,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Debug') {
+            steps {
+                script {
+                    sh 'ls -l $WORKSPACE'
+                }
+            }
+        }
         
         stage('Deploy') {
             steps {
                 script {
                     // Apply Kubernetes manifests to Minikube cluster
-                    sh '$WORKSPACE/kubectl apply -f $WORKSPACE/secret.yaml -f $WORKSPACE/deployment.yaml --namespace=default'
+                    sh '$WORKSPACE/jenkins-minikube/ kubectl apply -f $WORKSPACE/jenkins-minikube secret.yaml -f $WORKSPACE/jenkins-minikube deployment.yaml --namespace=default'
                 }
             }
         }
