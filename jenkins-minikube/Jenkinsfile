@@ -2,6 +2,14 @@ pipeline {
     agent any
     
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    git credentialsId: 'git', url: 'https://github.com/sindhurv18/quick.git', branch: 'master' // Replace with your GitHub repository URL and credentials ID
+                }
+            }
+        }  
+    stages {
         stage('Download kubectl') {
             steps {
                 script {
