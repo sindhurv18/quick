@@ -20,15 +20,7 @@ pipeline {
             steps {
                 script {
                     // Clone the repository containing Kubernetes manifest files
-                    git credentialsId: 'git', url: 'https://github.com/sindhurv18/quick.git', branch: 'master'
-                }
-            }
-        }
-
-        stage('Debug') {
-            steps {
-                script {
-                    sh 'ls -l $WORKSPACE'
+                    git url: 'https://github.com/sindhurv18/quick.git', branch: 'master'
                 }
             }
         }
@@ -36,8 +28,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Apply Kubernetes manifests to Minikube cluster
-                    sh '$WORKSPACE/jenkins-minikube/ kubectl apply -f $WORKSPACE/jenkins-minikube secret.yaml -f $WORKSPACE/jenkins-minikube deployment.yaml --namespace=default'
+                    // Change directory to the jenkins-minikube folder
+                    dir("$WORKSPACE/jenkins-minikube") {
+                        // Apply Kubernetes manifests to Minikube cluster
+                        sh '$WORKSPACE/kubectl apply -f secret.yaml -f deployment.yaml --namespace=default'
+                    }
                 }
             }
         }
