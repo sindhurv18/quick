@@ -1,26 +1,24 @@
 pipeline {
     agent any
-
+    
+    environment {
+        NAMESPACE = 'default' // Namespace where you want to deploy your manifests
+    }
+    
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from GitHub
-                git 'https://github.com/sindhurv18/quick.git'
+                script {
+                    git credentialsId: 'git', url: 'https://github.com/sindhurv18/quick.git', branch: 'master' // Replace with your GitHub repository URL and credentials ID
+                }
             }
         }
         
-        stage('Deploy to Minikube') {
+        stage('Deploy') {
             steps {
-                // Apply Kubernetes manifests
-                dir('jenkins-minikube') {
-                    // Apply secret
-                    sh 'kubectl apply -f secret.yaml'
-                    
-                    // Apply deployment
-                    sh 'kubectl apply -f deployment.yaml'
-                    
-                    // Wait for deployment to be ready
-                    sh 'kubectl rollout status deployment/portal-deployment'
+                script {
+                    // Apply Kubernetes manifests to Minikube cluster
+                    sh 'kubectl apply -f secret.yaml -f deployment.yaml --namespace=$NAMESPACE'
                 }
             }
         }
