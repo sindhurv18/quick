@@ -9,9 +9,6 @@ pipeline {
 
                     // Make kubectl executable
                     sh 'chmod +x kubectl'
-
-                    // Move kubectl to a writable directory (e.g., Jenkins workspace)
-                    sh 'mv kubectl $WORKSPACE/'
                 }
             }
         }
