@@ -1,15 +1,17 @@
 pipeline {
     agent any
     
-    environment {
-        NAMESPACE = 'default' // Namespace where you want to deploy your manifests
-    }
-    
     stages {
-        stage('Checkout') {
+        stage('Download kubectl') {
             steps {
                 script {
-                    git credentialsId: 'git', url: 'https://github.com/sindhurv18/quick.git', branch: 'master' // Replace with your GitHub repository URL and credentials ID
+                    sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+
+                    // Make kubectl executable
+                    sh 'chmod +x kubectl'
+
+                    // Move kubectl to a writable directory (e.g., Jenkins workspace)
+                    sh 'mv kubectl $WORKSPACE/'
                 }
             }
         }
@@ -18,7 +20,7 @@ pipeline {
             steps {
                 script {
                     // Apply Kubernetes manifests to Minikube cluster
-                    sh '/mnt/wsl/docker-desktop/cli-tools/usr/local/bin/kubectl apply -f secret.yaml -f deployment.yaml --namespace=$NAMESPACE'
+                    sh 'kubectl apply -f secret.yaml -f deployment.yaml --namespace=default'
                 }
             }
         }
