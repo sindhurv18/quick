@@ -17,7 +17,7 @@ pipeline {
                     // Change directory to the jenkins-minikube folder
                     dir("$WORKSPACE/jenkins-minikube") {
                         // Apply Kubernetes manifests to Minikube cluster
-                        sh '$WORKSPACE/kubectl apply -f secret.yaml -f deployment.yaml --namespace=devl-srv'
+                        sh '$WORKSPACE/kubectl apply -f secret.yaml -f deployment.yaml --namespace=default'
                     }
                 }
             }
