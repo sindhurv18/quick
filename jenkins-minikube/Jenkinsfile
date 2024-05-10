@@ -1,21 +1,7 @@
 pipeline {
     agent any
     
-    stages {
-        stage('Install kubectl') {
-            steps {
-                script {
-                    // Change directory to Jenkins workspace
-                    dir("$WORKSPACE") {
-                        // Download kubectl into Jenkins workspace
-                        sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
-                        // Make kubectl executable
-                        sh 'chmod +x kubectl'
-                    }
-                }
-            }
-        }
-        
+    stages { 
         stage('Checkout') {
             steps {
                 script {
@@ -31,7 +17,7 @@ pipeline {
                     // Change directory to the jenkins-minikube folder
                     dir("$WORKSPACE/jenkins-minikube") {
                         // Apply Kubernetes manifests to Minikube cluster
-                        sh '$WORKSPACE/kubectl apply -f secret.yaml -f deployment.yaml --namespace=default'
+                        sh '$WORKSPACE/kubectl apply -f secret.yaml -f deployment.yaml --namespace=devl-srv'
                     }
                 }
             }
