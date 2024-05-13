@@ -20,17 +20,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'rancher', variable: 'kubeconfig')]) {
                     
                     // Get the name of the Kubernetes cluster
-                    sh 'kubectl config get-clusters'
-                    
-                    // List pods in the gpmportal namespace
-                    sh 'kubectl get pods -n gpmportal'
-                    
-                    // List pods in the devl-gpmportal namespace
-                    sh 'kubectl get pods -n devl-gpmportal'
-                    sh 'kubectl apply -f secret.yaml -n devl-gpmportal'
-
-                    sh 'kubectl get secrets -n devl-gpmportal'
-                }
+                    sh 'kubectl delete secret registry-credentials -n devl-gpmportal'
             }
         }
     }
