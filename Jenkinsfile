@@ -23,13 +23,13 @@ pipeline {
                     sh 'kubectl config get-clusters'
                     
                     // List pods in the gpmportal namespace
-                    sh 'kubectl get pods -n gpmportal'
+                    sh 'kubectl get pods'
                     
                     // List pods in the devl-gpmportal namespace
-                    sh 'kubectl get pods -n devl-gpmportal'
-                    sh 'kubectl apply -f secret.yaml -n devl-gpmportal'
+                    sh 'kubectl get pods'
+                    sh 'kubectl apply -f secret.yaml'
 
-                    sh 'kubectl get secrets -n devl-gpmportal'
+                    sh 'kubectl get secrets'
                 }
             }
         }
