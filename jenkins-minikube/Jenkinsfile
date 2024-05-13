@@ -32,7 +32,7 @@ pipeline {
                         // Apply Kubernetes manifests to Minikube cluster
                     sh '$WORKSPACE/kubectl apply -f secret.yaml -n devl-gpmportal'
 
-                    sh 'kubectl get secret -n devl-gpmportal
+                    sh 'kubectl get secret -n devl-gpmportal'
                     
                 }
             }
