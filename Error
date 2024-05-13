@@ -1,0 +1,21 @@
+root@0346e830bfd5:/# cd /usr/local/bin/
+root@0346e830bfd5:/usr/local/bin# ls
+jenkins-support  jenkins.sh  kubectl
+
++ kubectl get pods -n gpmportal
+NAME                                           READY   STATUS    RESTARTS   AGE
+gpm-api-deployment-7667c5f6c4-ps7gh            1/1     Running   0          233d
+gpm-api-deployment-7667c5f6c4-wkm8c            1/1     Running   0          233d
+gpm-portal-deployment-75d9c99dc4-645l2         1/1     Running   0          4d18h
+gpm-portal-deployment-75d9c99dc4-ngbjt         1/1     Running   0          4d18h
+gpm-tokenservice-deployment-54cc9fb488-47sdm   1/1     Running   0          157d
+gpm-tokenservice-deployment-54cc9fb488-9lsn6   1/1     Running   0          157d
+[Pipeline] sh
++ kubectl get pods -n devl-gpmportal
+No resources found in devl-gpmportal namespace.
+[Pipeline] dir
+Running in /var/jenkins_home/workspace/rancher-test2/jenkins-minikube
+[Pipeline] {
+[Pipeline] sh
++ /var/jenkins_home/workspace/rancher-test2/kubectl apply -f secret.yaml -n devl-gpmportal
+/var/jenkins_home/workspace/rancher-test2/jenkins-minikube@tmp/durable-6da29aea/script.sh.copy: 1: /var/jenkins_home/workspace/rancher-test2/kubectl: not found
