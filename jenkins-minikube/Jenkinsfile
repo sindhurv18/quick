@@ -27,20 +27,13 @@ pipeline {
                     
                     // List pods in the devl-gpmportal namespace
                     sh 'kubectl get pods -n devl-gpmportal'
-                }
-            }
-        }
-        
-        stage('Deploy') {
-            steps {
-                script {
-                    // Change directory to the jenkins-minikube folder
+                    
                     dir("$WORKSPACE/jenkins-minikube") {
                         // Apply Kubernetes manifests to Minikube cluster
-                        sh '$WORKSPACE/kubectl apply -f secret.yaml -n devl-gpmportal'
-                    }
+                    sh '$WORKSPACE/kubectl apply -f secret.yaml -n devl-gpmportal'
+
+                    sh 'kubectl get secret -n devl-gpmportal
+                    
                 }
             }
         }
-    }
-}
