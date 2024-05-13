@@ -15,7 +15,7 @@ pipeline {
         }
 
        stage('Check Kubernetes Cluster') {
-            steps {
+        steps {
                 // Use the withCredentials block to securely access the kubeconfig file
                 withCredentials([file(credentialsId: 'rancher', variable: 'kubeconfig')]) {
                     
@@ -37,3 +37,4 @@ pipeline {
                 }
             }
         }
+       }    
