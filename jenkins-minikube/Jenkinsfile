@@ -15,7 +15,7 @@ pipeline {
         }
 
        stage('Check Kubernetes Cluster') {
-        steps {
+            steps {
                 // Use the withCredentials block to securely access the kubeconfig file
                 withCredentials([file(credentialsId: 'rancher', variable: 'kubeconfig')]) {
                     
@@ -27,14 +27,13 @@ pipeline {
                     
                     // List pods in the devl-gpmportal namespace
                     sh 'kubectl get pods -n devl-gpmportal'
-                    
                     dir("$WORKSPACE/jenkins-minikube") {
                         // Apply Kubernetes manifests to Minikube cluster
                     sh '$WORKSPACE/kubectl apply -f secret.yaml -n devl-gpmportal'
 
-                    sh 'kubectl get secret -n devl-gpmportal'
-                    
+                    sh 'kubectl get secrets -n devl-gpmportal'
                 }
             }
         }
-       }    
+    }
+}
