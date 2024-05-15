@@ -1,1 +1,1 @@
-kubectl --kubeconfig devl-cloudops-k8s.yaml -n gpmportal rollout restart deployment gpm-portal-deployment
+
